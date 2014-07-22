@@ -9,6 +9,7 @@ int main(int argc, const char *argv[])
     try{
         int *a;
         SmartPtr sp(a);
+        a = new int[10];
         for(int i = 0; i < 10; ++i){
             a[i] = i;
         }

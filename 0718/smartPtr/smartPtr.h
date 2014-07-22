@@ -7,7 +7,7 @@ class SmartPtr{
         SmartPtr(int *&a)
             :a_(a)
         {
-            a_ = new int[10];
+           // a_ = a;
             std::cout << "assign memery..." << std::endl;
         }
         ~SmartPtr()
