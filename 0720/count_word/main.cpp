@@ -12,8 +12,8 @@ class Words{
         void process();
         void display();
     private:
-        bool isShorter(const string &s1, const string &s2);
-        bool GT6(const string &s);
+        static bool isShorter(const string &s1, const string &s2);
+        static bool GT6(const string &s);
         vector<string> words_;
         size_t wc;
 };

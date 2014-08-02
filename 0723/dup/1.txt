@@ -1,0 +1,2 @@
+Hello, I an Zhang Shibo.
+dup2:Hello, World!
