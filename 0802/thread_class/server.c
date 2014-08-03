@@ -1,10 +1,10 @@
 #include "network.h"
-#include "threadpool.h"
+#include "thread.h"
 #include <pthread.h>
 #include <sys/select.h>
 
 void preprocess(int *fd_server);
-void do_service(int fd_client);
+void *do_service(void *fd_client);
 
 int main(int argc, const char *argv[])
 {
@@ -14,16 +14,14 @@ int main(int argc, const char *argv[])
     SA client_addr;
     socklen_t addrlen = sizeof(client_addr);
     preprocess(&fd_server);
-    Threadpool pool(5, do_service);
-    pool.start();
     while(1){
         int fd_client = accept(fd_server, (struct sockaddr*)&client_addr, &addrlen);
         if(fd_client == -1)
             ERR_EXIT("accept");
         printf("Client %s:%d is online.\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
-        pool.add_task(fd_client);
+        Thread thread(do_service);
+        thread.start(fd_client);
     }
-    pool.stop();
     close(fd_server);
     return 0;
 }
@@ -50,8 +48,10 @@ void preprocess(int *fd_server)
         ERR_EXIT("listen");
 }
 
-void do_service(int fd_client)
+void *do_service(void *fd)
 {
+    pthread_detach(pthread_self());
+    int fd_client = (int)fd;
     char recvbuf[1024] = {0};
     while(1){
         int nread = readline(fd_client, recvbuf, 1024);
