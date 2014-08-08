@@ -13,7 +13,7 @@ int main(int argc, const char *argv[])
         cout << "enter a word to query:" << endl;
         string s;
         cin >> s;
-        if(cin || s == "q")
+        if(!cin || s == "q")
             break;
         set<int> lines = tq.query(s);
         tq.print(lines, s);
