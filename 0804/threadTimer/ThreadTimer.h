@@ -14,7 +14,7 @@ class ThreadTimer
         void setTime(int val, int interval){timer_.setTimer(val, interval); }
         void setFunc(funcp func){timer_.setFunction(func); }
         void start(){thread_.start(); }
-        void stop(){timer_.stopTimer(), thread_.stop(); }
+        void stop(){timer_.stopTimer(); thread_.stop(); }
     private:
         Thread thread_;
         Timer timer_;

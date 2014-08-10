@@ -6,6 +6,7 @@ char x[10] = "backeopsl";
 char y[10] = "amnopcskl";
 int bkp[20][20];
 
+//递归计算最长公共子序列
 int LCS(int i, int j)
 {
     int a, b;
@@ -20,6 +21,27 @@ int LCS(int i, int j)
     }
 }
 
+//在LCS的基础上加了备忘录，从而减少了计算次数
+int LCS2(int i, int j)
+{
+    int a, b;
+    if(bkp[i][j] != -1)
+        return bkp[i][j];
+    if(i == 0 || j == 0){
+        bkp[i][j] = 0;
+        return 0;
+    }
+    else if(x[i - 1] == y[j - 1]){
+        bkp[i][j] = LCS(i - 1, j - 1) + 1;
+        return bkp[i][j];
+    }
+    else{
+         
+        bkp[i][j] = (a = LCS(i, j - 1)) > (b = LCS(i - 1, j)) ? a : b;
+        return bkp[i][j];
+    }
+}
+//用非递归方法计算最长公共子序列
 void makeLCS(char *str1, char *str2, int (*lcs)[20])
 {
     int i, j;

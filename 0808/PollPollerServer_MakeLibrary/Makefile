@@ -4,7 +4,7 @@ CFLAGS=-Wall -g
 BIN=libecho.a
 INCLUDE=echo
 SRC=src
-OBJS=Socket.o Rio.o TcpConnection.o PollPoller.o InetAddress.o TcpServer.o Thread.o Mutex.o Cond.o Threadpool.o Exception.o Timer.o TimerThread.o
+OBJS=Socket.o Rio.o TcpConnection.o PollPoller.o InetAddress.o TcpServer.o Thread.o Mutex.o Cond.o Threadpool.o Exception.o Timer.o 
 STARD=-std=c++0x -rdynamic
 $(BIN):$(OBJS)
 	ar -crv $@ -o $^
@@ -12,7 +12,7 @@ $(BIN):$(OBJS)
 	rm -f *.o
 	rm -rf $(INCLUDE)
 	mkdir $(INCLUDE)
-	cp src/*.h $(INCLUDE)/
+	cp src/*.h src/*.hpp $(INCLUDE)/
 %.o:$(SRC)/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@ $(STARD)
 install:
